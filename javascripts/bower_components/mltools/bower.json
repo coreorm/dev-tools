@@ -1,0 +1,25 @@
+{
+  "name": "mltools",
+  "homepage": "https://github.com/bruce-at-menulog/dev-tools",
+  "authors": [
+    "Bruce Li <bruce.li@menulog.com>"
+  ],
+  "description": "menulog dev tools",
+  "main": "dist/tools.js",
+  "keywords": [
+    "dev",
+    "tools"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "html",
+    "src",
+    "*.json",
+    "**/*.md",
+    "tests"
+  ]
+}
