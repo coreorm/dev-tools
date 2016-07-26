@@ -22,14 +22,13 @@
     "**/*.md",
     "tests"
   ],
-  "_release": "57a1a5d0d0",
+  "_release": "617ea8b172",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "57a1a5d0d035c4eb55b4b9d3268c7920e59e8038"
+    "commit": "617ea8b1722825b4af937f98ee64cd4e2114034d"
   },
   "_source": "https://github.com/bruce-at-menulog/dev-tools.git",
   "_target": "*",
-  "_originalSource": "mltools",
-  "_direct": true
+  "_originalSource": "mltools"
 }

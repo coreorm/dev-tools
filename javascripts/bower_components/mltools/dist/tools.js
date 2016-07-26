@@ -58,6 +58,11 @@
 
       // now find each bench
       for (let index in b) {
+        if (key) {
+          if (index.indexOf(key) < 0) {
+            continue;
+          }
+        }
         let val = b[index];
         console.group(index);
         val.map(function (item) {
@@ -65,7 +70,9 @@
         });
         console.groupEnd();
       }
-
+    },
+    dump() {
+      this.report('dump');
     }
   };
 })(this);
