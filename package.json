@@ -1,0 +1,28 @@
+{
+  "name": "dev-tools",
+  "version": "1.0.0",
+  "description": "dev tools (js) for menulog",
+  "main": "dist/tools.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo '=> Build Toolset' && cat src/*.js > dist/tools.js",
+    "watch": "watch 'npm run build' src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bruce-at-menulog/dev-tools.git"
+  },
+  "keywords": [
+    "dev",
+    "tools"
+  ],
+  "author": "Bruce B Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bruce-at-menulog/dev-tools/issues"
+  },
+  "homepage": "https://github.com/bruce-at-menulog/dev-tools#readme",
+  "devDependencies": {
+    "watch": "^0.17.1"
+  }
+}
