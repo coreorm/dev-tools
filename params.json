@@ -1,0 +1,6 @@
+{
+  "name": "Dev-tools",
+  "tagline": "developer tools (no private stuff pls)",
+  "body": "# dev-tools\r\ndeveloper tools (no private stuff pls)\r\n\r\n## JS for debug\r\n\r\nOpen up the chrome console, and type:\r\n`$.getScript('path-to-script');`\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
