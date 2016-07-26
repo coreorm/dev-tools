@@ -6,6 +6,7 @@
   ],
   "description": "menulog dev tools",
   "main": "dist/tools.js",
+  "version": "0.2",
   "keywords": [
     "dev",
     "tools"
