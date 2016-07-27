@@ -1,6 +1,6 @@
 {
   "name": "Dev-tools",
   "tagline": "developer tools (no private stuff pls)",
-  "body": "# dev-tools\r\ndeveloper tools (no private stuff pls)\r\n\r\n## JS for debug\r\n\r\nOpen up the chrome console, and type:\r\n`$.getScript('path-to-script');`\r\n",
+  "body": "# dev-tools\r\ndeveloper tools (no private stuff pls)\r\n\r\n## JS for debug\r\n\r\nOpen up the chrome console, and type:\r\n`$.getScript('https://goo.gl/nbRz6X');`\r\n\r\nNOTE: it's shortened - the full url is `https://bruce-at-menulog.github.io/dev-tools/javascripts/bower_components/mltools/dist/tools.js`\r\n\r\n## APIs available\r\n\r\nJust use `ML_DEBUG` in the console and you'll figure out :)\r\n \r\ne.g.\r\n```\r\nML_DEBUG.summary() // prints out a summary\r\n\r\nML_DEBUG.file('checkout')   // will fetch any file with 'checkout' in it\r\n\r\nML_DEBUG.benchmark() // will list all benchmarks\r\n\r\nML_DEBUG.dump() // will list all <?php dumpToConsole(...) ?> variables\r\n```\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
