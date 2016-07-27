@@ -18,11 +18,12 @@
             let valSelected = [];
             // search
             val.map(function (item) {
+              keyword = keyword.toLowerCase();
               try {
-                if (index.indexOf(keyword) >= 0) {
+                if (index.toLowerCase().indexOf(keyword) >= 0) {
                   valSelected.push(item);
                 }
-                if (item.indexOf(keyword) >= 0) {
+                if (index.toLowerCase().indexOf(keyword) >= 0) {
                   valSelected.push(item);
                 }
               } catch (e) {
@@ -73,6 +74,10 @@
     },
     dump() {
       this.report('dump');
+    },
+    error(type) {
+      // report on certain type only when required
+      this.report('error', type);
     }
   };
 })(this);
