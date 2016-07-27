@@ -23,7 +23,7 @@
                 if (index.toLowerCase().indexOf(keyword) >= 0) {
                   valSelected.push(item);
                 }
-                if (index.toLowerCase().indexOf(keyword) >= 0) {
+                if (item.toLowerCase().indexOf(keyword) >= 0) {
                   valSelected.push(item);
                 }
               } catch (e) {
