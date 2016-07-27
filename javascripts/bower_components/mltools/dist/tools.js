@@ -8,6 +8,7 @@
       for (let index in d[section]) {
         // if keyword exists, show only those with the keyword...
         let tmp = Object.create(d[section][index]);
+        let indexIsDisplayed = false;
         tmp.map(function (tmpItem) {
           let val = tmpItem;
           // force array to make it easier
@@ -33,13 +34,18 @@
           }
 
           if (val.length > 0) {
-            console.group(index);
+            if (!indexIsDisplayed) {
+              console.group(index);
+              indexIsDisplayed = true;
+            }
             val.map(function (item) {
               console.log(item);
             });
-            console.groupEnd();
           }
         });
+        if (indexIsDisplayed) {
+          console.groupEnd();
+        }
       }
     },
     summary(name) {
