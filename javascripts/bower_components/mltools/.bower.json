@@ -22,11 +22,11 @@
     "**/*.md",
     "tests"
   ],
-  "_release": "002fcb7c35",
+  "_release": "9c57c02f49",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "002fcb7c35f53634ca8dff8de505c46fc09b2f8a"
+    "commit": "9c57c02f49a3b8c9bf5f45b673456a4a6d1c86b1"
   },
   "_source": "https://github.com/bruce-at-menulog/dev-tools.git",
   "_target": "*",
