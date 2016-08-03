@@ -2,6 +2,7 @@
   // ml debug functions
   const d = w._ml_debug || [];
   w.ML_DEBUG = {
+    config: d.config,
     report(section, keyword) {
       // report on section, when keyword exists, show only things related to keyword
       if (!d[section]) return;
