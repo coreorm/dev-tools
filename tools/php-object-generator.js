@@ -73,13 +73,15 @@ String.prototype.camelCase = function () {
 };
 
 const setter = (name, type) => {
-  let typeStr = '';
+  let typeStr = '', cast = '';
   // is it the type a class?
   if (type.indexOf('/') >= 0) {
     typeStr = slash(type) + ' ';
   } else {
     if (['string', 'int', 'float', 'array', 'bool'].indexOf(type) < 0) {
       typeStr = type + ' ';
+    } else {
+      cast = `(${type})`;
     }
   }
 
@@ -91,7 +93,7 @@ const setter = (name, type) => {
      */
     public function set${name.camelCase().replace('$', '')}(${typeStr}$val)
     {
-        return $this->set('${name}', $val);
+        return $this->set('${name}', ${cast}$val);
     }
 `;
 };
@@ -119,7 +121,7 @@ const classifier = (conf) => {
   let comments = '';
 
   if (conf.use) {
-    conf.use.forEach(function(item) {
+    conf.use.forEach(function (item) {
       used += '\nuse ' + item + ';';
     });
 
