@@ -35,7 +35,7 @@ const jsonTemplate = {
 const help = () => {
   console.log(`
 USAGE:
-node php-object-generator.js <object.json> <target.php>
+node php-object-generator.js <object.json> <path-to-namespace-root>
 
 object.json example:
 ${JSON.stringify(jsonTemplate, null, 2)}
@@ -162,7 +162,7 @@ const classConfig = JSON.parse(fs.readFileSync(args[1]));
 
 let data = classifier(classConfig);
 
-const targFile = args[2];
+const targFile = args[2] + classConfig.namespace.replace('Menulog/', '') + '/' + classConfig.class + '.php';
 
 let srcExisting = fs.readFileSync(targFile).toString();
 
@@ -174,7 +174,7 @@ if (srcExisting.indexOf('# custom functions') >= 0) {
 }
 
 // write
-fs.writeFileSync(args[2], data);
+fs.writeFileSync(targFile, data);
 
 // finish here
-console.log('File generated to ' + args[2]);
+console.log('File generated to ' + targFile);
