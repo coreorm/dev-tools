@@ -4,6 +4,7 @@
  * told ya'll i'm lazy.
  */
 'use strict';
+const fs = require('fs');
 // 1st. gimme a source json, and a target file
 let args = [];
 
@@ -19,6 +20,9 @@ process.argv.forEach(function (el) {
 
 const jsonTemplate = {
   class: 'Foo',
+  const: {
+    "NAME": "VALUE"
+  },
   parent: 'Bar',
   namespace: "/Foo/Bar",
   use: ["class1", "class2"],
@@ -35,7 +39,7 @@ const jsonTemplate = {
 const help = () => {
   console.log(`
 USAGE:
-node php-object-generator.js <object.json> <path-to-namespace-root>
+node php-object-generator.js <object.json || path to all .json files> <path-to-namespace-root>
 
 object.json example:
 ${JSON.stringify(jsonTemplate, null, 2)}
@@ -99,23 +103,38 @@ const getter = (name, type) => {
     {
         return $this->get('${name}', $default);
     }
-
 `;
 };
 
 const classifier = (conf) => {
   let src = '';
   let used = '';
+  let constants = '';
+  let comments = '';
 
   if (conf.use) {
     used = 'use ' + conf.use.join(', ') + ';';
   }
 
-  let comments = '';
   if (conf.comment) {
     conf.comment.forEach(function (e) {
       comments += `\n * ${e}`;
     });
+  }
+
+  if (conf.const) {
+    for (let name in conf.const) {
+      let prefix = name.toUpperCase();
+      constants += `\n    # ${name}`;
+      conf.const[name].forEach(function(item) {
+        let value = item;
+        if (parseInt(item) !== item) {
+          value = `'${item}'`;
+        }
+        constants += `\n    const ${prefix}_${item.replace('$', '').toUpperCase()} = ${value};`;
+      });
+      constants += '\n';
+    }
   }
 
   let now = new Date();
@@ -127,7 +146,7 @@ ${used}
 
 #-cmt-
 class ${conf.class} extends ${conf.parent}
-{`);
+{${constants}`);
 
   for (let i in conf.data) {
     let k = conf.data[i];
@@ -156,25 +175,53 @@ if (!args[2]) {
   process.exit(1);
 }
 
-// read args
-const fs = require('fs');
-const classConfig = JSON.parse(fs.readFileSync(args[1]));
+// work on it
+const gen = (cnfFile) => {
+  // read args
+  const classConfig = JSON.parse(fs.readFileSync(cnfFile));
 
-let data = classifier(classConfig);
+  let data = classifier(classConfig);
 
-const targFile = args[2] + classConfig.namespace.replace('Menulog/', '') + '/' + classConfig.class + '.php';
+  const targFile = args[2] + classConfig.namespace.replace('Menulog/', '') + '/' + classConfig.class + '.php';
 
-let srcExisting = fs.readFileSync(targFile).toString();
+  let srcExisting = '';
+  try {
+    srcExisting = fs.readFileSync(targFile).toString();
+  } catch (err) {
+    console.log('File does not exist');
+  }
 
-if (srcExisting.indexOf('# custom functions') >= 0) {
-  // update
-  let tmpAr = srcExisting.split('# custom functions');
-  tmpAr[0] = data.slice(0, data.length - 1);
-  data = tmpAr.join('# custom functions');
-}
+  if (srcExisting.indexOf('# custom functions') >= 0) {
+    // update
+    let tmpAr = srcExisting.split('# custom functions');
+    tmpAr[0] = data.slice(0, data.length - 1);
+    data = tmpAr.join('# custom functions');
+  }
+
+// add '\n'
+  if (data.slice(-1) !== '\n') {
+    data += '\n';
+  }
 
 // write
-fs.writeFileSync(targFile, data);
+  fs.writeFileSync(targFile, data);
 
 // finish here
-console.log('File generated to ' + targFile);
+  console.log('File generated to ' + targFile);
+};
+
+// now read path or file
+const srcPath = args[1];
+if (fs.lstatSync(srcPath).isFile()) {
+  return gen(srcPath);
+}
+if (fs.lstatSync(srcPath).isDirectory()) {
+  // find all and read each one
+  let files = fs.readdirSync(srcPath);
+  files.forEach(function (file) {
+    if (file.indexOf('.json') >= 0) {
+      file = srcPath + file;
+      gen(file);
+    }
+  });
+}
