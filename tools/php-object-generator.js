@@ -74,9 +74,15 @@ String.prototype.camelCase = function () {
 
 const setter = (name, type) => {
   let typeStr = '';
+  // is it the type a class?
   if (type.indexOf('/') >= 0) {
     typeStr = slash(type) + ' ';
+  } else {
+    if (['string', 'int', 'float', 'array', 'bool'].indexOf(type) < 0) {
+      typeStr = type + ' ';
+    }
   }
+
   return `
     /**
      * set ${name}
@@ -113,7 +119,10 @@ const classifier = (conf) => {
   let comments = '';
 
   if (conf.use) {
-    used = 'use ' + conf.use.join(', ') + ';';
+    conf.use.forEach(function(item) {
+      used += '\nuse ' + item + ';';
+    });
+
   }
 
   if (conf.comment) {
@@ -126,7 +135,7 @@ const classifier = (conf) => {
     for (let name in conf.const) {
       let prefix = name.toUpperCase();
       constants += `\n    # ${name}`;
-      conf.const[name].forEach(function(item) {
+      conf.const[name].forEach(function (item) {
         let value = item;
         if (parseInt(item) !== item) {
           value = `'${item}'`;
@@ -141,7 +150,6 @@ const classifier = (conf) => {
 
   src += slash(`<?php
 namespace ${conf.namespace};
-
 ${used}
 
 #-cmt-
@@ -195,7 +203,7 @@ const gen = (cnfFile) => {
     // update
     let tmpAr = srcExisting.split('# custom functions');
     tmpAr[0] = data.slice(0, data.length - 1);
-    data = tmpAr.join('# custom functions');
+    data = tmpAr.join('\n# custom functions');
   }
 
 // add '\n'
