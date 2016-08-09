@@ -36,9 +36,9 @@ const help = () => {
   console.log(`
 USAGE:
 node php-object-generator.js <object.json> <target.php>
-  
+
 object.json example:
-${JSON.stringify(jsonTemplate, null, 2)}  
+${JSON.stringify(jsonTemplate, null, 2)}
   
 NOTE:
  JS doesn't like backslash \\ so please use / instead, it will be replaced with backslash in the actual code.
@@ -73,7 +73,7 @@ const setter = (name, type) => {
   if (type.indexOf('/') >= 0) {
     typeStr = slash(type) + ' ';
   }
-  return `    
+  return `
     /**
      * set ${name}
      * @param ${type} $val
@@ -82,7 +82,7 @@ const setter = (name, type) => {
     public function set${name.camelCase()}(${typeStr}$val)
     {
         return $this->set('${name}', $val);
-    }  
+    }
 `;
 };
 
@@ -111,11 +111,21 @@ const classifier = (conf) => {
     used = 'use ' + conf.use.join(', ') + ';';
   }
 
+  let comments = '';
+  if (conf.comment) {
+    conf.comment.forEach(function (e) {
+      comments += `\n * ${e}`;
+    });
+  }
+
+  let now = new Date();
+
   src += slash(`<?php
 namespace ${conf.namespace};
 
 ${used}
 
+#-cmt-
 class ${conf.class} extends ${conf.parent}
 {`);
 
@@ -128,6 +138,12 @@ class ${conf.class} extends ${conf.parent}
     let k = conf.data[i];
     src += getter(i, k);
   }
+
+  src = src.replace('#-cmt-', `/**
+ * Class Event${comments}
+ * generated at ${now.toLocaleString()}
+ * @package ${conf.namespace}
+ */`);
 
   return src + '}';
 
