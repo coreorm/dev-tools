@@ -91,7 +91,7 @@ const setter = (name, type) => {
      * @param ${type} $val
      * @return $this
      */
-    public function set${name.camelCase().replace('$', '')}(${typeStr}$val)
+    public function set${name.replace('$', '').camelCase()}(${typeStr}$val)
     {
         return $this->set('${name}', ${cast}$val);
     }
@@ -107,7 +107,7 @@ const getter = (name, type) => {
      * @param mixed $default null
      * @return ${typeStr}
      */
-    public function get${name.camelCase().replace('$', '')}($default = null)
+    public function get${name.replace('$', '').camelCase()}($default = null)
     {
         return $this->get('${name}', $default);
     }
