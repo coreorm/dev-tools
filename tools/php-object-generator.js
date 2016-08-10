@@ -72,7 +72,7 @@ String.prototype.camelCase = function () {
   return output;
 };
 
-const setter = (name, type) => {
+const setter = (name, type, conf) => {
   let typeStr = '', cast = '';
   // is it the type a class?
   if (type.indexOf('/') >= 0) {
@@ -89,7 +89,7 @@ const setter = (name, type) => {
     /**
      * set ${name}
      * @param ${type} $val
-     * @return $this
+     * @return ${conf.class}
      */
     public function set${name.replace('$', '').camelCase()}(${typeStr}$val)
     {
@@ -160,7 +160,7 @@ class ${conf.class} extends ${conf.parent}
 
   for (let i in conf.data) {
     let k = conf.data[i];
-    src += setter(i, k);
+    src += setter(i, k, conf);
   }
 
   for (let i in conf.data) {
