@@ -1,5 +1,18 @@
 'use strict';
 
+let args = [];
+
+var startRetrieving = false;
+process.argv.forEach(function (el) {
+  if (el.indexOf('structure.js') >= 0) {
+    startRetrieving = true;
+  }
+  if (startRetrieving) {
+    args.push(el);
+  }
+});
+
+
 const request = require('request');
 
 const jsonUriToStructure = function (url, callback) {
@@ -69,9 +82,10 @@ const jsonUriToStructure = function (url, callback) {
 
 };
 
-
 // test
-jsonUriToStructure('http://10.227.1.250:9200/menu/menu/3587283', function (src) {
+if (!args[1]) args[1] = 'http://10.227.1.250:9200/menu/menu/582469';
+
+jsonUriToStructure(args[1], function (src) {
   console.log(src);
 });
 
