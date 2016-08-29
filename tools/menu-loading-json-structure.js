@@ -14,11 +14,7 @@ const jsonUriToStructure = function (url, callback) {
    */
   const parse = function (object, structureFraction, title) {
     if (!title) {
-      title = 'ROOT';
-    }
-    if (typeof structureFraction !== 'object') {
-      structureFraction = {};
-      structure[title] = structureFraction;
+      structureFraction = structure = {};
     }
     if (typeof structureFraction[title] === 'undefined' && object instanceof Object) {
       structureFraction[title] = {};
@@ -38,6 +34,7 @@ const jsonUriToStructure = function (url, callback) {
       return '';
     }
     if (object instanceof Object) {
+      delete structureFraction[title];
       for (let k in object) {
         parse(object[k], structureFraction, k);
       }
