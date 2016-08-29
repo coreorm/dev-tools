@@ -24,5 +24,8 @@
   "homepage": "https://github.com/bruce-at-menulog/dev-tools#readme",
   "devDependencies": {
     "watch": "^0.17.1"
+  },
+  "dependencies": {
+    "request": "^2.74.0"
   }
 }
