@@ -22,3 +22,6 @@ ML_DEBUG.benchmark() // will list all benchmarks
 
 ML_DEBUG.dump() // will list all <?php dumpToConsole(...) ?> variables
 ```
+## Node script for getting the structure of json data
+
+See tools/
